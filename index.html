@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Giving App</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2e7d32">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #f4f7f9;
+    }
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fullscreen iframe pointing to your Apps Script web app -->
+  <iframe src="https://script.google.com/macros/s/AKfycbwhpUSCI5z-mJY-gMqJd0FFp2e7Xua3WptCWohu44w/dev/exec" id="appFrame"></iframe>
+
+  <script>
+    // Make iframe height dynamic for orientation changes
+    function resizeIframe() {
+      const iframe = document.getElementById('appFrame');
+      iframe.style.height = window.innerHeight + 'px';
+    }
+    window.addEventListener('resize', resizeIframe);
+    window.addEventListener('orientationchange', resizeIframe);
+    resizeIframe();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('Service Worker Registered'))
+    .catch(err => console.error('SW registration failed:', err));
+}
+
+  </script>
+</body>
+</html>
